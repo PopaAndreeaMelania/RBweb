@@ -1,0 +1,50 @@
+﻿@page
+@model RBweb.Pages.Meniuri.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Meniu</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Meniu.ID" />
+            <div class="form-group">
+                <label asp-for="Meniu.Denumire" class="control-label"></label>
+                <input asp-for="Meniu.Denumire" class="form-control" />
+                <span asp-validation-for="Meniu.Denumire" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meniu.Categorie" class="control-label"></label>
+                <input asp-for="Meniu.Categorie" class="form-control" />
+                <span asp-validation-for="Meniu.Categorie" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meniu.Pret" class="control-label"></label>
+                <input asp-for="Meniu.Pret" class="form-control" />
+                <span asp-validation-for="Meniu.Pret" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Meniu.DataAdaugare" class="control-label"></label>
+                <input asp-for="Meniu.DataAdaugare" class="form-control" />
+                <span asp-validation-for="Meniu.DataAdaugare" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
