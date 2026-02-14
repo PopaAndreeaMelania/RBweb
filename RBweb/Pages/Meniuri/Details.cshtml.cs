@@ -28,16 +28,19 @@ namespace RBweb.Pages.Meniuri
                 return NotFound();
             }
 
-            var meniu = await _context.Meniu.FirstOrDefaultAsync(m => m.ID == id);
+            var meniu = await _context.Meniu
+                .Include(m => m.MeniuCategorii)
+                .ThenInclude(mc => mc.Categorie)
+                .AsNoTracking()
+                .FirstOrDefaultAsync(m => m.ID == id);
 
-            if (meniu is not null)
+            if (meniu == null)
             {
-                Meniu = meniu;
-
-                return Page();
+                return NotFound();
             }
 
-            return NotFound();
+            Meniu = meniu;
+            return Page();
         }
     }
 }

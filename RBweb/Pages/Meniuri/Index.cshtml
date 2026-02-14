@@ -2,53 +2,71 @@
 @model RBweb.Pages.Meniuri.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Meniuri";
 }
 
-<h1>Index</h1>
+<h1>Meniuri</h1>
 
 <p>
-    <a asp-page="Create">Create New</a>
+    <a asp-page="Create" class="btn btn-primary">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Meniu[0].Denumire)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Meniu[0].Categorie)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Meniu[0].Pret)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Meniu[0].DataAdaugare)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Meniu) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Denumire)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categorie.Nume)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Pret)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataAdaugare)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+
+<form asp-page="./Index" method="get" class="mb-4">
+    <div class="form-actions no-color">
+        <p>
+            Caută după Denumire / Categorie:
+            <input type="text" name="searchString" value="@Model.CurrentFilter" />
+            <input type="submit" value="Search" class="btn btn-primary" /> |
+            <a asp-page="./Index">Back to full List</a>
+        </p>
+    </div>
+</form>
+
+@foreach (var item in Model.Meniu)
+{
+    <div class="rb-menu-card mb-4">
+
+        <!-- Imagine: daca e gol -> default.jpg -->
+        <img src="~/images/meniuri/@(string.IsNullOrEmpty(item.Imagine) ? "default.jpg" : item.Imagine)"
+             class="rb-menu-img" alt="@item.Denumire" />
+
+        <div class="p-3">
+            <div class="d-flex justify-content-between align-items-start">
+                <div>
+                    <h4 class="fw-bold mb-1">@item.Denumire</h4>
+                    <div class="rb-muted small">@item.DataAdaugare.ToString("dd.MM.yyyy")</div>
+                </div>
+
+                <div class="text-end">
+                    <div class="rb-price">@item.Pret.ToString("0.00") lei</div>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(item.Ingrediente))
+            {
+                <p class="rb-ingrediente mt-2 mb-2">@item.Ingrediente</p>
+            }
+            else
+            {
+                <p class="rb-ingrediente mt-2 mb-2 text-muted">Ingrediente necompletate.</p>
+            }
+
+            <div class="mb-3">
+                @foreach (var c in item.MeniuCategorii)
+                {
+                    <span class="badge bg-dark me-1">@c.Categorie.CategoryName</span>
+                }
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <a asp-page="./Details" asp-route-id="@item.ID" class="btn btn-outline-dark btn-sm">Details</a>
+                    <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-outline-secondary btn-sm">Edit</a>
+                    <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm">Delete</a>
+                </div>
+
+                <a asp-page="./Details" asp-route-id="@item.ID" class="rb-plus">+</a>
+            </div>
+        </div>
+    </div>
 }
-    </tbody>
-</table>

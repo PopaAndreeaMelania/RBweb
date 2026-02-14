@@ -29,3 +29,89 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+..hero-rb {
+    background: linear-gradient(180deg, #fff6f1, #ffffff);
+}
+
+.rb-logo {
+    max-height: 140px;
+    width: auto;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.rb-muted {
+    color: #555;
+}
+
+.rb-card {
+    border-radius: 18px;
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 10px 30px rgba(0,0,0,.06);
+    background: #fff;
+}
+
+.rb-gallery {
+    display: grid;
+    gap: 14px;
+}
+
+.rb-img {
+    width: 100%;
+    border-radius: 18px;
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    object-fit: cover;
+}
+.rb-menu-card {
+    background: #fff;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,.08);
+    max-width: 780px;
+    margin: 0 auto;
+    border: 1px solid rgba(0,0,0,.06);
+}
+
+.rb-menu-img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    display: block;
+}
+
+.rb-menu-placeholder {
+    background: #f3f3f3;
+}
+
+.rb-price {
+    font-weight: 800;
+    font-size: 20px;
+    color: #e63946;
+}
+
+.rb-ingrediente {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.rb-plus {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 24px;
+    text-decoration: none;
+    color: #111;
+}
+
+    .rb-plus:hover {
+        background: #111;
+        color: #fff;
+    }

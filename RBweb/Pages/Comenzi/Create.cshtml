@@ -1,0 +1,42 @@
+﻿@page
+@model RBweb.Pages.Comenzi.CreateModel
+
+        @{
+        ViewData["Title"] = "Create";
+        }
+        
+        <h1>Create</h1>
+        
+    <h4>Comanda</h4>
+    <hr />
+    <div class="row">
+    <div class="col-md-4">
+    <form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Comanda.ClientID" class="control-label"></label>
+                <select asp-for="Comanda.ClientID" class ="form-control" asp-items="ViewBag.ClientID" ></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comanda.MeniuID" class="control-label"></label>
+                <select asp-for="Comanda.MeniuID" class ="form-control" asp-items="ViewBag.MeniuID" ></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Comanda.DataLivrare" class="control-label"></label>
+                <input asp-for="Comanda.DataLivrare" class="form-control" />
+                <span asp-validation-for="Comanda.DataLivrare" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

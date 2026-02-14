@@ -1,0 +1,40 @@
+﻿@page
+@model RBweb.Pages.Comenzi.MeniuModel
+
+@{
+    ViewData["Title"] = "Meniu";
+}
+
+<h1>Meniu</h1>
+
+@foreach (var item in Model.Meniuri)
+{
+    <div class="rb-menu-card">
+        <img class="rb-menu-img"
+             src="~/images/meniuri/@(string.IsNullOrWhiteSpace(item.Imagine) ? "default.jpg" : item.Imagine.Trim())"
+             alt="@item.Denumire" />
+
+        <div class="rb-menu-content">
+            <div class="rb-menu-header">
+                <h2>@item.Denumire</h2>
+                <div class="rb-price">@item.Pret.ToString("0.00") lei</div>
+            </div>
+
+            <div class="rb-date">@item.DataAdaugare.ToString("dd.MM.yyyy")</div>
+
+            <div class="rb-ingrediente">
+                @(string.IsNullOrWhiteSpace(item.Ingrediente) ? "Ingrediente necompletate." : item.Ingrediente)
+            </div>
+
+            <div class="rb-categories">
+                @if (item.MeniuCategorii != null)
+                {
+                    foreach (var mc in item.MeniuCategorii)
+                    {
+                        <span class="badge bg-dark me-1">@mc.Categorie.CategoryName</span>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

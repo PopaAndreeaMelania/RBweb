@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RBweb.Models;
 using RomanianBurgerWeb.Data;
 
 namespace RBweb.Pages.Meniuri
 {
-    public class EditModel : PageModel
+    public class EditModel : MeniuCategoriiPageModel
     {
-        private readonly RomanianBurgerWeb.Data.RomanianBurgerWebContext _context;
+        private readonly RomanianBurgerWebContext _context;
 
-        public EditModel(RomanianBurgerWeb.Data.RomanianBurgerWebContext context)
+        public EditModel(RomanianBurgerWebContext context)
         {
             _context = context;
         }
@@ -26,54 +23,51 @@ namespace RBweb.Pages.Meniuri
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var meniu = await _context.Meniu
-                .Include(m => m.Categorie)
+            Meniu = await _context.Meniu
+                .Include(m => m.MeniuCategorii)
+                    .ThenInclude(mc => mc.Categorie)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (meniu == null)
-            {
+
+            if (Meniu == null)
                 return NotFound();
-            }
-            Meniu = meniu;
+
+            PopulateAssignedCategorieData(_context, Meniu);
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(string[] selectedCategorii)
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            // 1) Ia entitatea reală din DB (cu legăturile many-to-many)
+            var meniuToUpdate = await _context.Meniu
+                .Include(m => m.MeniuCategorii)
+                    .ThenInclude(mc => mc.Categorie)
+                .FirstOrDefaultAsync(m => m.ID == Meniu.ID);
 
-            _context.Attach(Meniu).State = EntityState.Modified;
+            if (meniuToUpdate == null)
+                return NotFound();
 
-            try
+            // 2) Actualizează legăturile many-to-many din checkbox-uri
+            UpdateMeniuCategorii(_context, selectedCategorii, meniuToUpdate);
+
+            // 3) Actualizează câmpurile simple (inclusiv Imagine + Ingrediente)
+            if (await TryUpdateModelAsync(
+                meniuToUpdate,
+                "Meniu",
+                m => m.Denumire,
+                m => m.Pret,
+                m => m.DataAdaugare,
+                m => m.Imagine,
+                m => m.Ingrediente))
             {
                 await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MeniuExists(Meniu.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return RedirectToPage("./Index");
             }
 
-            return RedirectToPage("./Index");
-        }
-
-        private bool MeniuExists(int id)
-        {
-            return _context.Meniu.Any(e => e.ID == id);
+            // dacă validarea pică, refacem checkbox-urile
+            PopulateAssignedCategorieData(_context, meniuToUpdate);
+            return Page();
         }
     }
 }

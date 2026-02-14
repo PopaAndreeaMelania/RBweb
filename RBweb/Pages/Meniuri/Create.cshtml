@@ -1,44 +1,69 @@
 ﻿@page
 @model RBweb.Pages.Meniuri.CreateModel
 
-        @{
-        ViewData["Title"] = "Create";
-        }
-        
-        <h1>Create</h1>
-        
-    <h4>Meniu</h4>
-    <hr />
-    <div class="row">
-    <div class="col-md-4">
-    <form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Meniu.Denumire" class="control-label"></label>
-                <input asp-for="Meniu.Denumire" class="form-control" />
-                <span asp-validation-for="Meniu.Denumire" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Meniu.Pret" class="control-label"></label>
-                <input asp-for="Meniu.Pret" class="form-control" />
-                <span asp-validation-for="Meniu.Pret" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Meniu.CategorieID" class="control-label"></label>
-                <select asp-for="Meniu.CategorieID" class="form-control" asp-items="ViewBag.CategorieID"></select>
-                <span asp-validation-for="Meniu.CategorieID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
+@{
+    ViewData["Title"] = "Create";
+}
 
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+<h1>Adaugă meniu</h1>
+<hr />
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label class="form-label"><b>Meniu:</b></label>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Meniu.Denumire" class="form-label"></label>
+        <input asp-for="Meniu.Denumire" class="form-control" />
+        <span asp-validation-for="Meniu.Denumire" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Meniu.Pret" class="form-label"></label>
+        <input asp-for="Meniu.Pret" class="form-control" />
+        <span asp-validation-for="Meniu.Pret" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Meniu.Imagine" class="form-label"></label>
+        <input asp-for="Meniu.Imagine" class="form-control" placeholder="ex: Dracula.webp" />
+        <small class="text-muted">Fișierul trebuie să fie în wwwroot/images/meniuri/</small>
+        <span asp-validation-for="Meniu.Imagine" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Meniu.Ingrediente" class="form-label"></label>
+        <textarea asp-for="Meniu.Ingrediente" class="form-control" rows="4"
+                  placeholder="ex: carne vită, cheddar, sos..."></textarea>
+        <span asp-validation-for="Meniu.Ingrediente" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label"><b>Categorii:</b></label>
+
+        <div class="border rounded p-2">
+            @foreach (var cat in Model.AssignedCategorieDataList)
+            {
+                <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="selectedCategorii"
+                           value="@cat.CategorieID" />
+                    <label class="form-check-label">@cat.Name</label>
+                </div>
+            }
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create</button>
+    <a asp-page="./Index" class="btn btn-secondary">Back</a>
+</form>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

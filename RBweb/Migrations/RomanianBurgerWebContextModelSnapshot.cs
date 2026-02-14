@@ -30,13 +30,69 @@ namespace RBweb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<string>("Nume")
+                    b.Property<string>("CategoryName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Nume");
 
                     b.HasKey("ID");
 
                     b.ToTable("Categorie");
+                });
+
+            modelBuilder.Entity("RBweb.Models.Client", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Client");
+                });
+
+            modelBuilder.Entity("RBweb.Models.Comanda", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int?>("ClientID")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DataLivrare")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("MeniuID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("ClientID");
+
+                    b.HasIndex("MeniuID");
+
+                    b.ToTable("Comanda");
                 });
 
             modelBuilder.Entity("RBweb.Models.Meniu", b =>
@@ -47,9 +103,6 @@ namespace RBweb.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int?>("CategorieID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("DataAdaugare")
                         .HasColumnType("datetime2");
 
@@ -57,23 +110,92 @@ namespace RBweb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Imagine")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ingrediente")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<decimal>("Pret")
                         .HasColumnType("decimal(6,2)");
 
                     b.HasKey("ID");
 
+                    b.ToTable("Meniu");
+                });
+
+            modelBuilder.Entity("RBweb.Models.MeniuCategorie", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("CategorieID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MeniuID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
                     b.HasIndex("CategorieID");
 
-                    b.ToTable("Meniu");
+                    b.HasIndex("MeniuID");
+
+                    b.ToTable("MeniuCategorie");
+                });
+
+            modelBuilder.Entity("RBweb.Models.Comanda", b =>
+                {
+                    b.HasOne("RBweb.Models.Client", "Client")
+                        .WithMany("Comenzi")
+                        .HasForeignKey("ClientID");
+
+                    b.HasOne("RBweb.Models.Meniu", "Meniu")
+                        .WithMany("Comenzi")
+                        .HasForeignKey("MeniuID");
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Meniu");
+                });
+
+            modelBuilder.Entity("RBweb.Models.MeniuCategorie", b =>
+                {
+                    b.HasOne("RBweb.Models.Categorie", "Categorie")
+                        .WithMany("MeniuCategorii")
+                        .HasForeignKey("CategorieID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RBweb.Models.Meniu", "Meniu")
+                        .WithMany("MeniuCategorii")
+                        .HasForeignKey("MeniuID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categorie");
+
+                    b.Navigation("Meniu");
+                });
+
+            modelBuilder.Entity("RBweb.Models.Categorie", b =>
+                {
+                    b.Navigation("MeniuCategorii");
+                });
+
+            modelBuilder.Entity("RBweb.Models.Client", b =>
+                {
+                    b.Navigation("Comenzi");
                 });
 
             modelBuilder.Entity("RBweb.Models.Meniu", b =>
                 {
-                    b.HasOne("RBweb.Models.Categorie", "Categorie")
-                        .WithMany()
-                        .HasForeignKey("CategorieID");
+                    b.Navigation("Comenzi");
 
-                    b.Navigation("Categorie");
+                    b.Navigation("MeniuCategorii");
                 });
 #pragma warning restore 612, 618
         }

@@ -117,7 +117,7 @@ $.validator.addMethod( "accept", function( value, element, param ) {
 	return true;
 }, $.validator.format( "Please enter a value with a valid mimetype." ) );
 
-$.validator.addMethod( "alphanumeric", function( value, element ) {
+$.validator.addMethod( "alphaCategoryNameric", function( value, element ) {
 	return this.optional( element ) || /^\w+$/i.test( value );
 }, "Letters, numbers, and underscores only please." );
 
@@ -373,13 +373,13 @@ $.validator.addMethod( "cnpjBR", function( value, element ) {
 
 	// Valida DVs
 	var tamanho = ( value.length - 2 );
-	var numeros = value.substring( 0, tamanho );
+	var CategoryNameros = value.substring( 0, tamanho );
 	var digitos = value.substring( tamanho );
 	var soma = 0;
 	var pos = tamanho - 7;
 
 	for ( var i = tamanho; i >= 1; i-- ) {
-		soma += numeros.charAt( tamanho - i ) * pos--;
+		soma += CategoryNameros.charAt( tamanho - i ) * pos--;
 		if ( pos < 2 ) {
 			pos = 9;
 		}
@@ -392,12 +392,12 @@ $.validator.addMethod( "cnpjBR", function( value, element ) {
 	}
 
 	tamanho = tamanho + 1;
-	numeros = value.substring( 0, tamanho );
+	CategoryNameros = value.substring( 0, tamanho );
 	soma = 0;
 	pos = tamanho - 7;
 
 	for ( var il = tamanho; il >= 1; il-- ) {
-		soma += numeros.charAt( tamanho - il ) * pos--;
+		soma += CategoryNameros.charAt( tamanho - il ) * pos--;
 		if ( pos < 2 ) {
 			pos = 9;
 		}
@@ -1054,7 +1054,7 @@ $.validator.addMethod( "nifES", function( value, element ) {
 }, "Please specify a valid NIF number." );
 
 /*
- * Numer identyfikacji podatkowej ( NIP ) is the way tax identification used in Poland for companies
+ * CategoryNamer identyfikacji podatkowej ( NIP ) is the way tax identification used in Poland for companies
  */
 $.validator.addMethod( "nipPL", function( value ) {
 	"use strict";

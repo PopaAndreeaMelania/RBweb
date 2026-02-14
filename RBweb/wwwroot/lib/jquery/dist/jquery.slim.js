@@ -1584,7 +1584,7 @@ Expr = jQuery.expr = {
 					find.error( match[ 0 ] );
 				}
 
-				// numeric x and y parameters for Expr.filter.CHILD
+				// CategoryNameric x and y parameters for Expr.filter.CHILD
 				// remember that false/true cast respectively to 0/1
 				match[ 4 ] = +( match[ 4 ] ?
 					match[ 5 ] + ( match[ 6 ] || 1 ) :
@@ -2518,7 +2518,7 @@ function matcherFromGroupMatchers( elementMatchers, setMatchers ) {
 			// no element matchers and no seed.
 			// Incrementing an initially-string "0" `i` allows `i` to remain a string only in that
 			// case, which will result in a "00" `matchedCount` that differs from `i` but is also
-			// numerically zero.
+			// CategoryNamerically zero.
 			if ( bySet && i !== matchedCount ) {
 				j = 0;
 				while ( ( matcher = setMatchers[ j++ ] ) ) {
@@ -3994,7 +3994,7 @@ Data.prototype = {
 				if ( owner.nodeType ) {
 					owner[ this.expando ] = value;
 
-				// Otherwise secure it in a non-enumerable property
+				// Otherwise secure it in a non-eCategoryNamerable property
 				// configurable must be true to allow the property to be
 				// deleted when data is removed
 				} else {
@@ -5222,7 +5222,7 @@ jQuery.event = {
 
 	addProp: function( name, hook ) {
 		Object.defineProperty( jQuery.Event.prototype, name, {
-			enumerable: true,
+			eCategoryNamerable: true,
 			configurable: true,
 
 			get: isFunction( hook ) ?
@@ -5239,7 +5239,7 @@ jQuery.event = {
 
 			set: function( value ) {
 				Object.defineProperty( this, name, {
-					enumerable: true,
+					eCategoryNamerable: true,
 					configurable: true,
 					writable: true,
 					value: value
@@ -6885,7 +6885,7 @@ jQuery.extend( {
 			val = cssNormalTransform[ name ];
 		}
 
-		// Make numeric if forced or a qualifier was provided and val looks numeric
+		// Make CategoryNameric if forced or a qualifier was provided and val looks CategoryNameric
 		if ( extra === "" || extra ) {
 			num = parseFloat( val );
 			return extra === true || isFinite( num ) ? num || 0 : val;
@@ -7936,7 +7936,7 @@ function buildParams( prefix, obj, traditional, add ) {
 
 			} else {
 
-				// Item is non-scalar (array or object), encode its numeric index.
+				// Item is non-scalar (array or object), encode its CategoryNameric index.
 				buildParams(
 					prefix + "[" + ( typeof v === "object" && v != null ? i : "" ) + "]",
 					v,
@@ -8539,15 +8539,15 @@ jQuery.type = toType;
 
 jQuery.now = Date.now;
 
-jQuery.isNumeric = function( obj ) {
+jQuery.isCategoryNameric = function( obj ) {
 
-	// As of jQuery 3.0, isNumeric is limited to
+	// As of jQuery 3.0, isCategoryNameric is limited to
 	// strings and numbers (primitives or objects)
 	// that can be coerced to finite numbers (gh-2662)
 	var type = jQuery.type( obj );
 	return ( type === "number" || type === "string" ) &&
 
-		// parseFloat NaNs numeric-cast false positives ("")
+		// parseFloat NaNs CategoryNameric-cast false positives ("")
 		// ...but misinterprets leading-number strings, particularly hex literals ("0x...")
 		// subtraction forces infinities to NaN
 		!isNaN( obj - parseFloat( obj ) );

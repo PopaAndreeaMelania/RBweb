@@ -13,7 +13,9 @@ namespace RomanianBurgerWeb.Data
         public DbSet<Meniu> Meniu { get; set; }
 
         public DbSet<Categorie> Categorie { get; set; }
-
+        public DbSet<MeniuCategorie> MeniuCategorie { get; set; }
+        public DbSet<Client> Client { get; set; }
+        public DbSet<Comanda> Comanda { get; set; }
 
     }
 }

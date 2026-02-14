@@ -10,39 +10,82 @@
 <h4>Meniu</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <input type="hidden" asp-for="Meniu.ID" />
-            <div class="form-group">
+
+            <!-- Denumire -->
+            <div class="form-group mb-3">
                 <label asp-for="Meniu.Denumire" class="control-label"></label>
                 <input asp-for="Meniu.Denumire" class="form-control" />
                 <span asp-validation-for="Meniu.Denumire" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Meniu.Categorie" class="control-label"></label>
-                <input asp-for="Meniu.Categorie" class="form-control" />
-                <span asp-validation-for="Meniu.Categorie" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+
+            <!-- Pret -->
+            <div class="form-group mb-3">
                 <label asp-for="Meniu.Pret" class="control-label"></label>
                 <input asp-for="Meniu.Pret" class="form-control" />
                 <span asp-validation-for="Meniu.Pret" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <!-- DataAdaugare -->
+            <div class="form-group mb-3">
                 <label asp-for="Meniu.DataAdaugare" class="control-label"></label>
                 <input asp-for="Meniu.DataAdaugare" class="form-control" />
                 <span asp-validation-for="Meniu.DataAdaugare" class="text-danger"></span>
             </div>
-            <div class="form-group">
+
+            <!-- Imagine -->
+            <div class="form-group mb-3">
+                <label asp-for="Meniu.Imagine" class="control-label"></label>
+                <input asp-for="Meniu.Imagine" class="form-control" placeholder="ex: dracula.jpg" />
+            </div>
+
+            <!-- Ingrediente -->
+            <div class="form-group mb-3">
+                <label asp-for="Meniu.Ingrediente" class="control-label"></label>
+                <textarea asp-for="Meniu.Ingrediente"
+                          class="form-control"
+                          rows="3"
+                          placeholder="ex: carne vită, cheddar, bacon, sos special..."></textarea>
+            </div>
+
+            <!-- Categorii -->
+            <div class="form-group mb-3">
+                <label class="control-label"><strong>Categorii:</strong></label>
+                <div class="table">
+                    <table>
+                        <tr>
+@{
+    int cnt = 0;
+    foreach (var cat in Model.AssignedCategorieDataList)
+    {
+        if (cnt++ % 3 == 0)
+        {
+@: </tr><tr>
+        }
+@: <td style="padding-right:12px;">
+    <input type="checkbox"
+           name="selectedCategorii"
+           value="@cat.CategorieID"
+           @(Html.Raw(cat.Assigned ? "checked=\"checked\"" : "")) />
+    @cat.Name
+@: </td>
+    }
+@: </tr>
+}
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group mt-2">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-page="./Index" class="btn btn-link">Back to List</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {

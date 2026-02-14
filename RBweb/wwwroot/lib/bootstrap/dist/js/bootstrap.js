@@ -16,7 +16,7 @@
         if (k !== 'default') {
           const d = Object.getOwnPropertyDescriptor(e, k);
           Object.defineProperty(n, k, d.get ? d : {
-            enumerable: true,
+            eCategoryNamerable: true,
             get: () => e[k]
           });
         }

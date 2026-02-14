@@ -18,7 +18,11 @@ namespace RBweb.Models
         [DataType(DataType.Date)]
         public DateTime DataAdaugare { get; set; }
 
-        public int? CategorieID { get; set; }
-        public Categorie? Categorie { get; set; }
+        public ICollection<MeniuCategorie>? MeniuCategorii { get; set; }
+        public ICollection<Comanda>? Comenzi { get; set; }
+        public string? Imagine { get; set; }
+
+        public string? Ingrediente { get; set; }
+
     }
 }

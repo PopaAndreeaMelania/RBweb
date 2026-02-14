@@ -30,7 +30,6 @@ namespace RBweb.Pages.Meniuri
             }
 
             var meniu = await _context.Meniu
-                .Include(m => m.Categorie)
                 .FirstOrDefaultAsync(m => m.ID == id);
 
             if (meniu is not null)

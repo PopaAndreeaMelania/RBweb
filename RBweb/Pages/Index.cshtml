@@ -1,10 +1,52 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Acasă";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="hero-rb text-center py-5">
+    <div class="container">
+        <img src="~/images/home/Sigla.png" alt="Romanian Burger" class="rb-logo mb-3" />
+        <h1 class="display-5 fw-bold">Romanian Burger</h1>
+        <p class="lead mb-4">
+            Burgeri cu suflet românesc, smoke & grill, rețete proprii și pasiune pentru gust autentic.
+        </p>
+
+        <div class="d-flex justify-content-center gap-2 flex-wrap">
+            <a class="btn btn-primary btn-lg" asp-page="/Comenzi/Meniu">Vezi meniul</a>
+            <a class="btn btn-outline-dark btn-lg" asp-page="/Categorii/Index">Categorii</a>
+        </div>
+    </div>
+</section>
+
+<section class="container my-5">
+    <div class="row g-4 align-items-center">
+        <div class="col-lg-6">
+            <h2 class="fw-bold">Povestea noastră</h2>
+            <p class="rb-muted">
+                Romanian Burger a pornit din dorința de a face burgeri cinstiți,
+                cu ingrediente de calitate și combinații care spun o poveste.
+                Punem accent pe gust, simplitate și experiență.
+            </p>
+            <p class="rb-muted">
+                De la food truck la noua locație din Brașov, continuăm să creștem
+                fără să pierdem esența: burgeri făcuți cu pasiune.
+            </p>
+
+            <div class="rb-card p-3 mt-3">
+                <h5 class="mb-1">Noua locație — Brașov</h5>
+                <p class="mb-0 rb-muted">
+                    Ne găsești acum și în <strong>Brașov</strong>.
+                    Te așteptăm la un burger bun și o atmosferă faină!
+                </p>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="rb-gallery">
+                <img src="~/images/home/Fereastra.png" alt="Romanian Burger - fereastră" class="rb-img" />
+                <img src="~/images/home/Locatie.png" alt="Romanian Burger - locație Brașov" class="rb-img" />
+            </div>
+        </div>
+    </div>
+</section>
