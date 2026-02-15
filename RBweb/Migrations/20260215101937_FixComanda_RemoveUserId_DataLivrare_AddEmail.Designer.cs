@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RomanianBurgerWeb.Data;
 
@@ -11,9 +12,11 @@ using RomanianBurgerWeb.Data;
 namespace RBweb.Migrations
 {
     [DbContext(typeof(RomanianBurgerWebContext))]
-    partial class RomanianBurgerWebContextModelSnapshot : ModelSnapshot
+    [Migration("20260215101937_FixComanda_RemoveUserId_DataLivrare_AddEmail")]
+    partial class FixComanda_RemoveUserId_DataLivrare_AddEmail
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,9 +89,6 @@ namespace RBweb.Migrations
                     b.Property<int?>("MeniuID")
                         .HasColumnType("int");
 
-                    b.Property<string>("Mentiuni")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UserEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -100,35 +100,6 @@ namespace RBweb.Migrations
                     b.HasIndex("MeniuID");
 
                     b.ToTable("Comanda");
-                });
-
-            modelBuilder.Entity("RBweb.Models.ComandaItem", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("Cantitate")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ComandaID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MeniuID")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Pret")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("ComandaID");
-
-                    b.HasIndex("MeniuID");
-
-                    b.ToTable("ComandaItem");
                 });
 
             modelBuilder.Entity("RBweb.Models.Meniu", b =>
@@ -185,30 +156,15 @@ namespace RBweb.Migrations
 
             modelBuilder.Entity("RBweb.Models.Comanda", b =>
                 {
-                    b.HasOne("RBweb.Models.Client", null)
+                    b.HasOne("RBweb.Models.Client", "Client")
                         .WithMany("Comenzi")
                         .HasForeignKey("ClientID");
 
-                    b.HasOne("RBweb.Models.Meniu", null)
+                    b.HasOne("RBweb.Models.Meniu", "Meniu")
                         .WithMany("Comenzi")
                         .HasForeignKey("MeniuID");
-                });
 
-            modelBuilder.Entity("RBweb.Models.ComandaItem", b =>
-                {
-                    b.HasOne("RBweb.Models.Comanda", "Comanda")
-                        .WithMany("Items")
-                        .HasForeignKey("ComandaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RBweb.Models.Meniu", "Meniu")
-                        .WithMany()
-                        .HasForeignKey("MeniuID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Comanda");
+                    b.Navigation("Client");
 
                     b.Navigation("Meniu");
                 });
@@ -240,11 +196,6 @@ namespace RBweb.Migrations
             modelBuilder.Entity("RBweb.Models.Client", b =>
                 {
                     b.Navigation("Comenzi");
-                });
-
-            modelBuilder.Entity("RBweb.Models.Comanda", b =>
-                {
-                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("RBweb.Models.Meniu", b =>

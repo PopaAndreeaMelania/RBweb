@@ -1,77 +1,30 @@
 ﻿@page
-@model IndexModel
+@model RBweb.Pages.Comenzi.IndexModel
 @{
-    ViewData["Title"] = "Acasă";
+    ViewData["Title"] = "Comenzi";
 }
 
-<section class="hero-rb text-center py-5">
-    <div class="container">
-        <img src="~/images/home/logo.png" alt="Romanian Burger" class="rb-logo mb-3" />
-        <h1 class="display-5 fw-bold">Romanian Burger</h1>
-        <p class="lead mb-4">
-            Food truck & burger house — gust românesc, rețete proprii și vibe de smoke & grill.
-        </p>
+<h1>Comenzi (Admin)</h1>
 
-        <div class="d-flex justify-content-center gap-2 flex-wrap">
-            <a class="btn btn-primary btn-lg" asp-page="/Meniuri/Index">Vezi meniul</a>
-            <a class="btn btn-outline-dark btn-lg" asp-page="/Categorii/Index">Categorii</a>
-            <a class="btn btn-outline-secondary btn-lg" asp-page="/Comenzi/Index">Comenzi</a>
-        </div>
-    </div>
-</section>
-
-<section class="container my-5">
-    <div class="row g-4 align-items-center">
-        <div class="col-lg-6">
-            <h2 class="fw-bold">Povestea noastră</h2>
-            <p class="rb-muted">
-                Romanian Burger a pornit din dorința de a face burgeri simpli, cinstiți și memorabili:
-                carne bună, sosuri făcute de noi și combinații inspirate din gustul românesc.
-            </p>
-            <p class="rb-muted">
-                Ne place aroma de smoke, grill-ul făcut cu răbdare și ideea de “comfort food” servit cu stil.
-                Continuăm să creștem pas cu pas, fără să pierdem calitatea.
-            </p>
-
-            <div class="rb-card p-3 mt-3">
-                <h5 class="mb-1">Noua locație — Brașov</h5>
-                <p class="mb-0 rb-muted">
-                    Ne găsești acum și în <strong>Brașov</strong> — te așteptăm la un burger bun și o atmosferă faină.
-                    <br />
-                    <small class="rb-muted">Completează aici adresa exactă (ex: Str. …, nr. …).</small>
-                </p>
-            </div>
-        </div>
-
-        <div class="col-lg-6">
-            <div class="rb-gallery">
-                <img src="~/images/home/sign.jpg" alt="Romanian Burger - siglă" class="rb-img" />
-                <img src="~/images/home/brasov.jpg" alt="Romanian Burger - Brașov" class="rb-img" />
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="container my-5">
-    <div class="row g-4">
-        <div class="col-md-4">
-            <div class="rb-card p-4 h-100">
-                <h5 class="fw-bold">Ingrediente</h5>
-                <p class="rb-muted mb-0">Calitate, prospețime și combinații curate.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="rb-card p-4 h-100">
-                <h5 class="fw-bold">Smoke & Grill</h5>
-                <p class="rb-muted mb-0">Aromă, textură, echilibru — ca la burgerii buni.</p>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="rb-card p-4 h-100">
-                <h5 class="fw-bold">Meniu</h5>
-                <p class="rb-muted mb-3">Vezi produsele și categoriile direct din aplicație.</p>
-                <a class="btn btn-sm btn-dark" asp-page="/Meniuri/Index">Meniuri</a>
-            </div>
-        </div>
-    </div>
-</section>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Data</th>
+            <th>Total</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in Model.Comanda)
+        {
+            var total = c.Items.Sum(i => i.Pret * i.Cantitate);
+            <tr>
+                <td>@c.UserEmail</td>
+                <td>@c.DataComanda.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@total.ToString("0.00") lei</td>
+                <td><a asp-page="./Details" asp-route-id="@c.ID">Detalii</a></td>
+            </tr>
+        }
+    </tbody>
+</table>

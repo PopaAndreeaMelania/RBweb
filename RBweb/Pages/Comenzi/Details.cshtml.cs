@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using RBweb.Models;
 using RomanianBurgerWeb.Data;
+using RBweb.Models;
 
 namespace RBweb.Pages.Comenzi
 {
     public class DetailsModel : PageModel
     {
-        private readonly RomanianBurgerWeb.Data.RomanianBurgerWebContext _context;
+        private readonly RomanianBurgerWebContext _context;
 
-        public DetailsModel(RomanianBurgerWeb.Data.RomanianBurgerWebContext context)
+        public DetailsModel(RomanianBurgerWebContext context)
         {
             _context = context;
         }
@@ -23,21 +19,17 @@ namespace RBweb.Pages.Comenzi
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
-            var comanda = await _context.Comanda.FirstOrDefaultAsync(m => m.ID == id);
+            var comanda = await _context.Comanda
+                .Include(c => c.Items)
+                    .ThenInclude(i => i.Meniu)
+                .FirstOrDefaultAsync(m => m.ID == id);
 
-            if (comanda is not null)
-            {
-                Comanda = comanda;
+            if (comanda == null) return NotFound();
 
-                return Page();
-            }
-
-            return NotFound();
+            Comanda = comanda;
+            return Page();
         }
     }
 }

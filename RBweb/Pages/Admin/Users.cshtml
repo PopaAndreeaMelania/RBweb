@@ -1,0 +1,34 @@
+﻿@page
+@model RBweb.Pages.Admin.UsersModel
+@{
+    ViewData["Title"] = "Utilizatori";
+}
+
+<h1>Utilizatori</h1>
+
+@if (!Model.Users.Any())
+{
+    <p>Nu există utilizatori.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Email Confirmed</th>
+                <th>Roluri</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var u in Model.Users)
+            {
+                <tr>
+                    <td>@u.Email</td>
+                    <td>@(u.EmailConfirmed ? "Da" : "Nu")</td>
+                    <td>@(u.Roles.Any() ? string.Join(", ", u.Roles) : "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

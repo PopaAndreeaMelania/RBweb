@@ -1,0 +1,54 @@
+﻿@page
+@model RBweb.Pages.Comenzi.AddToCartModel
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using RomanianBurgerWeb.Data;
+using RBweb.Helpers;
+using RBweb.Models.ViewModels;
+
+namespace RBweb.Pages.Comenzi
+{
+    [Authorize]
+    public class AddToCartModel : PageModel
+    {
+        private readonly RomanianBurgerWebContext _context;
+        private const string CART_KEY = "CART";
+
+        public AddToCartModel(RomanianBurgerWebContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<IActionResult>
+    OnPostAsync(int meniuId)
+    {
+    var meniu = await _context.Meniu.AsNoTracking()
+    .FirstOrDefaultAsync(m => m.ID == meniuId);
+
+    if (meniu == null) return NotFound();
+
+    var cart = HttpContext.Session.GetObject<List<CartItemVM>>(CART_KEY)
+                       ?? new List<CartItemVM>();
+
+            var existing = cart.FirstOrDefault(x => x.MeniuID == meniuId);
+
+            if (existing != null)
+                existing.Cantitate++;
+            else
+                cart.Add(new CartItemVM
+                {
+                    MeniuID = meniu.ID,
+                    Denumire = meniu.Denumire,
+                    Pret = meniu.Pret,
+                    Imagine = meniu.Imagine,
+                    Cantitate = 1
+                });
+
+            HttpContext.Session.SetObject(CART_KEY, cart);
+
+            return RedirectToPage("/Comenzi/Cos");
+        }
+    }
+}

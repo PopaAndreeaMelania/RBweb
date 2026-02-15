@@ -35,6 +35,27 @@
                     }
                 }
             </div>
+
+            <div class="mt-3">
+                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                {
+                    <div class="d-flex gap-2">
+                        <form method="post" asp-page="/Comenzi/AddToCart" asp-route-meniuId="@item.ID">
+                            <button class="btn btn-danger" type="submit">Adaugă în coș</button>
+                        </form>
+
+                        <a class="btn btn-outline-dark" asp-page="/Comenzi/Cos">Vezi coș</a>
+                    </div>
+                }
+                else
+                {
+                    <a class="btn btn-outline-danger"
+                       asp-area="Identity"
+                       asp-page="/Account/Login">
+                        Login pentru a comanda
+                    </a>
+                }
+            </div>
         </div>
     </div>
 }

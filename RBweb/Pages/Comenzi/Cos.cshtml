@@ -1,0 +1,67 @@
+﻿@page
+@model RBweb.Pages.Comenzi.CosModel
+@{
+    ViewData["Title"] = "Coș";
+}
+
+<h1>Coș</h1>
+
+@if (!Model.Cart.Any())
+{
+    <p>Coșul este gol.</p>
+    <a class="btn btn-danger" asp-page="/Comenzi/Meniu">Înapoi la meniu</a>
+}
+else
+{
+    <form method="post" asp-page-handler="Update">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Produs</th>
+                    <th>Preț</th>
+                    <th style="width:140px;">Cantitate</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Cart)
+                {
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <img src="~/images/meniuri/@(string.IsNullOrWhiteSpace(item.Imagine) ? "default.jpg" : item.Imagine.Trim())"
+                                     style="width:60px;height:60px;object-fit:cover;border-radius:10px;" />
+                                <div>@item.Denumire</div>
+                            </div>
+                        </td>
+                        <td>@item.Pret.ToString("0.00") lei</td>
+                        <td>
+                            <input class="form-control" type="number" min="1"
+                                   name="qty[@item.MeniuID]" value="@item.Cantitate" />
+                        </td>
+                        <td>@((item.Pret * item.Cantitate).ToString("0.00")) lei</td>
+                        <td>
+                            <button class="btn btn-sm btn-outline-danger"
+                                    type="submit"
+                                    formaction="?handler=Remove&meniuId=@item.MeniuID">
+                                Șterge
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <div><b>Total:</b> @Model.Total.ToString("0.00") lei</div>
+
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-secondary" asp-page="/Comenzi/Meniu">Înapoi la meniu</a>
+
+                <button type="submit" class="btn btn-outline-dark">Actualizează</button>
+                <a class="btn btn-danger" asp-page="/Comenzi/PlaceOrder">Plasează comanda</a>
+            </div>
+        </div>
+    </form>
+}

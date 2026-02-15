@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using RBweb.Models;
 using RomanianBurgerWeb.Data;
+using RBweb.Models;
 
 namespace RBweb.Pages.Comenzi
 {
@@ -18,11 +16,13 @@ namespace RBweb.Pages.Comenzi
 
         public IList<Meniu> Meniuri { get; set; } = new List<Meniu>();
 
+       
+       
+
         public async Task OnGetAsync()
         {
+       
             Meniuri = await _context.Meniu
-                .Include(m => m.MeniuCategorii)
-                    .ThenInclude(mc => mc.Categorie)
                 .AsNoTracking()
                 .ToListAsync();
         }

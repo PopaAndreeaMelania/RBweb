@@ -6,13 +6,12 @@ namespace RBweb.Models
     {
         public int ID { get; set; }
 
-        public int? ClientID { get; set; }
-        public Client? Client { get; set; }
+        [Required]
+        public string UserEmail { get; set; } = "";
 
-        public int? MeniuID { get; set; }
-        public Meniu? Meniu { get; set; }
+        public DateTime DataComanda { get; set; } = DateTime.Now;
 
-        [DataType(DataType.Date)]
-        public DateTime DataLivrare { get; set; }
+        public ICollection<ComandaItem> Items { get; set; } = new List<ComandaItem>();
+        public string? Mentiuni { get; set; }
     }
 }
