@@ -11,65 +11,57 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
 
-                <!-- BRAND + LOGO -->
-                <a class="navbar-brand d-flex align-items-center" asp-area="" asp-page="/Index">
+                <a class="navbar-brand d-flex align-items-center" asp-page="/Index">
                     <img src="~/images/home/Sigla.png"
                          alt="RB Logo"
                          style="height:50px; margin-right:10px;" />
                     <span style="font-weight:600; font-size:18px;">Romanian Burger</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 
-                    <!-- LEFT MENU -->
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-page="/Index">Home</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-page="/Comenzi/Meniu">Vezi meniul</a>
                         </li>
 
-                        <!-- THREE DOTS: TOT MENIUL AICI -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark"
-                               href="#"
-                               id="mainDropdown"
-                               role="button"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                ⋮
-                            </a>
+                        @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-dark"
+                                   href="#"
+                                   id="adminDropdown"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    ⋮
+                                </a>
 
-                            <ul class="dropdown-menu" aria-labelledby="mainDropdown">
-                                <li>
-                                    <a class="dropdown-item" asp-area="" asp-page="/Privacy">Privacy</a>
-                                </li>
-
-                                @if (User.IsInRole("Admin"))
-                                {
-                                    <li><hr class="dropdown-divider" /></li>
-
+                                <ul class="dropdown-menu" aria-labelledby="adminDropdown">
                                     <li><a class="dropdown-item" asp-page="/Admin/Users">Utilizatori</a></li>
-
-                                    <li><a class="dropdown-item" asp-page="/Clienti/Index">Clienti</a></li>
-                                    <li><a class="dropdown-item" asp-page="/Comenzi/Index">Comenzi</a></li>
+                                    <li><a class="dropdown-item" asp-page="/Admin/Comenzi/Index">Comenzi</a></li>
                                     <li><a class="dropdown-item" asp-page="/Meniuri/Index">Meniuri</a></li>
                                     <li><a class="dropdown-item" asp-page="/Categorii/Index">Categorii</a></li>
-                                }
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
 
-                    <!-- RIGHT MENU -->
                     <ul class="navbar-nav ms-auto">
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
@@ -89,21 +81,38 @@
                                 </a>
 
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+
+                                    <li>
+                                        <a class="dropdown-item" asp-page="/Comenzi/ComenzileMele">
+                                            Comenzile mele
+                                        </a>
+                                    </li>
+
+                                    <li><hr class="dropdown-divider" /></li>
+
                                     <li>
                                         <form method="post" asp-area="Identity" asp-page="/Account/Logout">
-                                            <button type="submit" class="dropdown-item">Logout</button>
+                                            <button type="submit" class="dropdown-item">
+                                                Logout
+                                            </button>
                                         </form>
                                     </li>
+
                                 </ul>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="nav-link text-dark"
+                                   asp-area="Identity"
+                                   asp-page="/Account/Login">Login</a>
                             </li>
+
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                                <a class="nav-link text-dark"
+                                   asp-area="Identity"
+                                   asp-page="/Account/Register">Register</a>
                             </li>
                         }
                     </ul>
@@ -121,7 +130,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2026 - RBweb - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2026 - RBweb -
+            <a asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
@@ -130,5 +140,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

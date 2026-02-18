@@ -1,0 +1,50 @@
+﻿@page "{id:int}"
+@model RBweb.Pages.Admin.Comenzi.DetailsModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
+
+<h2>Detalii comandă</h2>
+
+<div class="mb-3">
+    <div><strong>Nr. comandă:</strong> @Model.Comanda.NumarComanda</div>
+    <div><strong>Data:</strong> @Model.Comanda.DataComanda.ToString("dd.MM.yyyy HH:mm")</div>
+    <div><strong>Status:</strong> @Model.Comanda.Status</div>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Comanda.Mentiuni))
+    {
+        <div class="mt-2">
+            <strong>Mentiuni:</strong>
+            <div class="alert alert-warning mt-1">
+                @Model.Comanda.Mentiuni
+            </div>
+        </div>
+    }
+</div>
+
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th>Produs</th>
+            <th class="text-end">Preț</th>
+            <th class="text-end">Cantitate</th>
+            <th class="text-end">Subtotal</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Comanda.Items)
+        {
+            var pret = item.Meniu?.Pret ?? 0m;
+            <tr>
+                <td>@item.Meniu?.Denumire</td>
+                <td class="text-end">@pret.ToString("0.00") lei</td>
+                <td class="text-end">@item.Cantitate</td>
+                <td class="text-end">@((pret * item.Cantitate).ToString("0.00")) lei</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-between align-items-center">
+    <h4 class="m-0">Total: @Model.Total.ToString("0.00") lei</h4>
+    <a class="btn btn-secondary" asp-page="./Index">Înapoi</a>
+</div>

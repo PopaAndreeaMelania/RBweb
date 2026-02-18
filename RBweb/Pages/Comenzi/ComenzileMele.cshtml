@@ -1,0 +1,44 @@
+﻿@page
+@model RBweb.Pages.Comenzi.ComenzileMeleModel
+
+@functions {
+    string BadgeClass(string status) => status switch
+    {
+        "Noua" => "bg-secondary",
+        "InLucru" => "bg-warning text-dark",
+        "Finalizata" => "bg-success",
+        "Anulata" => "bg-danger",
+        _ => "bg-secondary"
+    };
+}
+
+
+<h2 class="mb-3">Comenzile mele</h2>
+
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th>Status</th>
+            <th class="text-end"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Comenzi)
+        {
+            <tr>
+                <td>@item.DataComanda.ToString("dd.MM.yyyy HH:mm:ss")</td>
+                <td>
+                    <span class="badge @BadgeClass(item.Status.ToString()) px-3 py-2">
+                        @item.Status
+                    </span>
+                </td>
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-secondary"
+                       asp-page="/Comenzi/Details"
+                       asp-route-id="@item.ID">Detalii</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

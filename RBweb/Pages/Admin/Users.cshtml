@@ -6,18 +6,24 @@
 
 <h1>Utilizatori</h1>
 
+@if (!string.IsNullOrWhiteSpace(Model.Msg))
+{
+    <div class="alert alert-info">@Model.Msg</div>
+}
+
 @if (!Model.Users.Any())
 {
     <p>Nu există utilizatori.</p>
 }
 else
 {
-    <table class="table">
+    <table class="table align-middle">
         <thead>
             <tr>
                 <th>Email</th>
                 <th>Email Confirmed</th>
                 <th>Roluri</th>
+                <th style="width:120px;"></th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +33,15 @@ else
                     <td>@u.Email</td>
                     <td>@(u.EmailConfirmed ? "Da" : "Nu")</td>
                     <td>@(u.Roles.Any() ? string.Join(", ", u.Roles) : "-")</td>
+                    <td class="text-end">
+                        <form method="post" asp-page-handler="Delete"
+                              onsubmit="return confirm('Sigur vrei să ștergi acest utilizator?');">
+                            <input type="hidden" name="id" value="@u.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                Șterge
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>

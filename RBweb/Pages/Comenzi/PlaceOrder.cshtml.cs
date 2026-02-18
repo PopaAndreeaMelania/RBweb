@@ -45,6 +45,8 @@ namespace RBweb.Pages.Comenzi
                 Mentiuni = Mentiuni
             };
 
+            comanda.NumarComanda = "RB-" + Guid.NewGuid().ToString("N")[..6].ToUpper();
+
             foreach (var ci in cart)
             {
                 comanda.Items.Add(new ComandaItem
@@ -57,6 +59,7 @@ namespace RBweb.Pages.Comenzi
 
             _context.Comanda.Add(comanda);
             await _context.SaveChangesAsync();
+
 
             HttpContext.Session.Remove(CART_KEY);
 

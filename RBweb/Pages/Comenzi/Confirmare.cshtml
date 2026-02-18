@@ -1,9 +1,11 @@
 ﻿@page
+@model RBweb.Pages.Comenzi.ConfirmareModel
 @{
-    ViewData["Title"] = "Comandă plasată";
+    ViewData["Title"] = "Comanda plasata";
 }
 
-<h2>Comanda a fost plasată ✅</h2>
-<p>Mulțumim! Estimare livrare: <b>45 min – 2 ore</b>.</p>
+<h2>Comanda a fost plasata ✅</h2>
+<p>Numărul comenzii pentru ridicare este: <strong>@Model.NumarComanda</strong></p>
+<p>Multumim! Estimare livrare: <b>Maxim 30 de minute</b>.</p>
 
-<a class="btn btn-danger" asp-page="/Comenzi/Meniu">Înapoi la meniu</a>
+<a class="btn btn-danger" asp-page="/Comenzi/Meniu">Inapoi la meniu</a>

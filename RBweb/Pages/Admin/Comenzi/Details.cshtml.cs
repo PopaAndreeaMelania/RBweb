@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using RomanianBurgerWeb.Data;
 using RBweb.Models;
 
-namespace RBweb.Pages.Comenzi
+namespace RBweb.Pages.Admin.Comenzi
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class DetailsModel : PageModel
     {
         private readonly RomanianBurgerWebContext _context;
@@ -22,11 +22,12 @@ namespace RBweb.Pages.Comenzi
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
-           var comanda = await _context.Comanda
-               .Include(c => c.Items).ThenInclude(i => i.Meniu)
+            var comanda = await _context.Comanda
+                .Include(c => c.Items)
+                    .ThenInclude(i => i.Meniu)
                 .FirstOrDefaultAsync(c => c.ID == id);
 
-           if (comanda == null) return NotFound();
+            if (comanda == null) return NotFound();
 
             Comanda = comanda;
             return Page();

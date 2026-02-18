@@ -1,0 +1,60 @@
+﻿@page
+@model RBweb.Pages.Admin.Comenzi.IndexModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
+@functions {
+    string BadgeClass(string status) => status switch
+    {
+        "Noua" => "bg-secondary",
+        "InLucru" => "bg-warning text-dark",
+        "Finalizata" => "bg-success",
+        "Anulata" => "bg-danger",
+        _ => "bg-secondary"
+    };
+}
+
+<h1>Comenzi de la clienți</h1>
+
+<table class="table align-middle">
+    <thead>
+        <tr>
+            <th>Nr.</th>
+            <th>Email</th>
+            <th>Data</th>
+            <th>Status</th>
+            <th class="text-end"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Comenzi)
+        {
+            <tr>
+                <td class="fw-semibold">@item.NumarComanda</td>
+
+                <td>@item.UserEmail</td>
+
+                <td>@item.DataComanda.ToString("dd.MM.yyyy HH:mm")</td>
+
+                <td>
+                    <span class="badge @BadgeClass(item.Status.ToString()) px-3 py-2">
+                        @item.Status
+                    </span>
+                </td>
+
+                <td class="text-end">
+                    <a class="btn btn-sm btn-outline-secondary me-2"
+                       asp-page="./Details"
+                       asp-route-id="@item.ID">
+                        Detalii
+                    </a>
+
+                    <a class="btn btn-sm btn-outline-primary"
+                       asp-page="./Edit"
+                       asp-route-id="@item.ID">
+                        Edit status
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

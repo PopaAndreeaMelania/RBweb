@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RomanianBurgerWeb.Data;
 
@@ -11,9 +12,11 @@ using RomanianBurgerWeb.Data;
 namespace RBweb.Migrations
 {
     [DbContext(typeof(RomanianBurgerWebContext))]
-    partial class RomanianBurgerWebContextModelSnapshot : ModelSnapshot
+    [Migration("20260218150843_AddStatusComanda")]
+    partial class AddStatusComanda
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,10 +90,6 @@ namespace RBweb.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Mentiuni")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NumarComanda")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
