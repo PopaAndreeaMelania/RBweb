@@ -9,7 +9,7 @@ namespace RBweb.Models
         public int ID { get; set; }
 
         [Display(Name = "Nume Categorie")]
-        [Column("Nume")]   
+        [Column("CategoryName")] // <- numele real al coloanei din DB
         public string CategoryName { get; set; } = string.Empty;
 
         public ICollection<MeniuCategorie> MeniuCategorii { get; set; } = new List<MeniuCategorie>();
