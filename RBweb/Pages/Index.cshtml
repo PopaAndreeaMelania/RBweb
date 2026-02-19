@@ -4,17 +4,30 @@
     ViewData["Title"] = "Acasă";
 }
 
-<section class="hero-rb text-center py-5">
+<section class="hero-rb rb-home text-center py-5">
     <div class="container">
-        <img src="~/images/home/Sigla.png" alt="Romanian Burger" class="rb-logo mb-3" />
-        <h1 class="display-5 fw-bold">Romanian Burger</h1>
-        <p class="lead mb-4">
+
+        <div class="rb-badge mb-3">Smoke • Grill • Rețete proprii</div>
+        <img src="~/images/home/Sigla.png" class="rb-logo mb-3" />
+        <h1 class="rb-h1 mb-3">Romanian Burger</h1>
+
+        <p class="rb-lead mb-4">
             Burgeri cu suflet românesc, smoke & grill, rețete proprii și pasiune pentru gust autentic.
         </p>
 
         <div class="d-flex justify-content-center gap-2 flex-wrap">
-            <a class="btn btn-primary btn-lg" asp-page="/Comenzi/Meniu">Vezi meniul</a>
+            <a class="btn rb-btn-primary btn-lg" asp-page="/Comenzi/Meniu">Vezi meniul</a>
+
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <a class="btn rb-btn-ghost btn-lg" asp-page="/Comenzi/ComenzileMele">Comenzile mele</a>
+            }
+            else
+            {
+                <a class="btn rb-btn-ghost btn-lg" asp-area="Identity" asp-page="/Account/Login">Autentificare</a>
+            }
         </div>
+
     </div>
 </section>
 
@@ -22,11 +35,13 @@
     <div class="row g-4 align-items-center">
         <div class="col-lg-6">
             <h2 class="fw-bold">Povestea noastră</h2>
+
             <p class="rb-muted">
                 Romanian Burger a pornit din dorința de a face burgeri cinstiți,
                 cu ingrediente de calitate și combinații care spun o poveste.
                 Punem accent pe gust, simplitate și experiență.
             </p>
+
             <p class="rb-muted">
                 De la food truck la noua locație din Brașov, continuăm să creștem
                 fără să pierdem esența: burgeri făcuți cu pasiune.

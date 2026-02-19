@@ -78,6 +78,9 @@
 	  <MauiXaml Update="Views\CosPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\LoginPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\MeniuPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

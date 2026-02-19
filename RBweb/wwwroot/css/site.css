@@ -1,37 +1,57 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+    text-align: start;
 }
+
+
 .hero-rb {
-    background: linear-gradient(180deg, #fff6f1, #ffffff);
+    padding: 70px 0;
 }
+
+    .hero-rb h1 {
+        letter-spacing: -0.6px;
+    }
+
+    .hero-rb .btn-primary {
+        background: #111 !important;
+        border: none !important;
+        border-radius: 14px !important;
+        padding: 12px 26px !important;
+        font-weight: 800 !important;
+        box-shadow: 0 14px 30px rgba(0,0,0,.10);
+    }
+
+        .hero-rb .btn-primary:hover {
+            background: #2b2b2b !important;
+        }
+
 
 .rb-logo {
     max-height: 140px;
@@ -63,6 +83,7 @@ body {
     box-shadow: 0 10px 30px rgba(0,0,0,.08);
     object-fit: cover;
 }
+
 .rb-menu-card {
     background: #fff;
     border-radius: 22px;
@@ -223,4 +244,152 @@ body {
 
     .auth-divider span {
         padding: 0 6px;
+    }
+
+.navbar {
+    background: rgba(255,255,255,.92) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0,0,0,.06) !important;
+    padding: 12px 0 !important;
+}
+
+
+.navbar-brand img {
+    height: 44px !important;
+    width: auto;
+    border-radius: 14px;
+    box-shadow: 0 10px 22px rgba(0,0,0,.10);
+}
+
+
+.navbar-brand span {
+    font-weight: 800 !important;
+    font-size: 18px !important;
+    letter-spacing: -0.3px;
+    color: #111 !important;
+}
+
+
+.navbar .nav-link {
+    font-weight: 600 !important;
+    color: #111 !important;
+    padding: 8px 12px !important;
+    border-radius: 12px;
+}
+
+    .navbar .nav-link:hover {
+        background: rgba(0,0,0,.05);
+    }
+
+
+.navbar .dropdown-menu {
+    border-radius: 14px;
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 18px 45px rgba(0,0,0,.10);
+    padding: 8px;
+}
+
+.navbar .dropdown-item {
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-weight: 600;
+}
+
+    .navbar .dropdown-item:hover {
+        background: rgba(0,0,0,.05);
+    }
+
+
+.navbar .dropdown-toggle img {
+    box-shadow: 0 8px 18px rgba(0,0,0,.12);
+}
+
+.rb-home.hero-rb {
+    background: radial-gradient(900px circle at 15% 10%, rgba(0,0,0,.04), transparent 55%), radial-gradient(900px circle at 85% 30%, rgba(0,0,0,.03), transparent 60%), linear-gradient(180deg, #fafafa, #ffffff);
+    padding: 70px 0;
+}
+
+.rb-badge {
+    display: inline-flex;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+    border: 1px solid rgba(0,0,0,.08);
+    background: rgba(255,255,255,.7);
+    backdrop-filter: blur(6px);
+}
+
+.rb-home .rb-badge {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 16px auto;
+}
+
+
+.rb-h1 {
+    font-weight: 900;
+    letter-spacing: -0.6px;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    margin: 0;
+}
+
+.rb-lead {
+    color: #6c757d;
+    font-size: 1.1rem;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.rb-home .rb-btn-primary {
+    background: #111 !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 14px !important;
+    padding: 12px 18px !important;
+    font-weight: 800 !important;
+}
+
+    .rb-home .rb-btn-primary:hover {
+        background: #2b2b2b !important;
+    }
+
+.rb-home .rb-btn-ghost {
+    border: 1px solid rgba(0,0,0,.18) !important;
+    background: #fff !important;
+    border-radius: 14px !important;
+    padding: 12px 18px !important;
+    font-weight: 800 !important;
+}
+
+    .rb-home .rb-btn-ghost:hover {
+        background: #f3f4f6 !important;
+    }
+
+
+.rb-gallery {
+    display: grid;
+    gap: 14px;
+}
+
+.rb-img {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 1px solid rgba(0,0,0,.06);
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.rb-link {
+    font-weight: 600;
+    color: #111;
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 10px;
+    transition: all .15s ease;
+}
+
+    .rb-link:hover {
+        background: rgba(0,0,0,.05);
     }

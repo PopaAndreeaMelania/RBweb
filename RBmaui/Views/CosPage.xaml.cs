@@ -1,4 +1,5 @@
 using RBmaui.Models;
+using Microsoft.Maui.Storage;
 
 namespace RBmaui.Views
 {
@@ -56,9 +57,17 @@ namespace RBmaui.Views
                 return;
             }
 
-            string email = "test@client.com"; // temporar, pana facem login
+            var token = Preferences.Get("auth_token", "");
+            var emailSalvat = Preferences.Get("user_email", "");
 
-            var numar = await App.Database.PlaseazaComandaAsync(email, App.Cos.Items.ToList());
+            if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(emailSalvat))
+            {
+                await DisplayAlert("Autentificare", "Trebuie sa te loghezi ca sa plasezi comanda.", "Logheaza-te");
+                await Navigation.PushAsync(new LoginPage());
+                return;
+            }
+
+            var numar = await App.Database.PlaseazaComandaAsync(emailSalvat, App.Cos.Items.ToList());
 
             if (numar == null)
             {
@@ -67,9 +76,10 @@ namespace RBmaui.Views
             }
 
             App.Cos.Goleste();
+            ActualizeazaTotal();
+
             await DisplayAlert("Succes", $"Comanda plasata! Numar: {numar}", "OK");
             await Navigation.PopAsync();
         }
-
     }
 }

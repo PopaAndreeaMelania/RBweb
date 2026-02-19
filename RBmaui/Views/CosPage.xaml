@@ -3,11 +3,15 @@
              x:Class="RBmaui.Views.CosPage"
              Title="Cos">
 
-    <VerticalStackLayout Padding="12" Spacing="10">
+    <Grid Padding="12" RowDefinitions="Auto,*,Auto">
 
-        <Label Text="Cosul meu" FontSize="22" FontAttributes="Bold"/>
+        <Label Grid.Row="0"
+               Text="Cosul meu"
+               FontSize="22"
+               FontAttributes="Bold" />
 
-        <CollectionView ItemsSource="{Binding Items}">
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Items}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Padding="10" Margin="0,6">
@@ -21,7 +25,6 @@
                                 <Label Text="{Binding Cantitate}" VerticalOptions="Center"/>
                                 <Button Text="+" Clicked="Plus_Clicked"/>
                                 <Button Text="Sterge" Clicked="Sterge_Clicked"/>
-
                             </HorizontalStackLayout>
 
                             <Label Text="{Binding Subtotal, StringFormat='Subtotal: {0} lei'}" />
@@ -32,8 +35,18 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Label x:Name="TotalLabel" Text="Total: 0 lei" FontSize="18" FontAttributes="Bold"/>
-        <Button Text="Plaseaza comanda" BackgroundColor="black" TextColor="White" Clicked="PlaseazaComanda_Clicked"/>
-        
-    </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="2" Spacing="10">
+            <Label x:Name="TotalLabel"
+                   Text="Total: 0 lei"
+                   FontSize="18"
+                   FontAttributes="Bold"/>
+
+            <Button Text="Plaseaza comanda"
+                    BackgroundColor="black"
+                    TextColor="White"
+                    Clicked="PlaseazaComanda_Clicked"/>
+        </VerticalStackLayout>
+
+    </Grid>
+
 </ContentPage>

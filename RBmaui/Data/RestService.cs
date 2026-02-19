@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
 using RBmaui.Models;
 using System.Net.Http.Json;
+using Microsoft.Maui.Storage;
+using System.Net.Http.Headers;
+
 
 namespace RBmaui.Data
 {
@@ -67,7 +70,38 @@ namespace RBmaui.Data
             var list = JsonConvert.DeserializeObject<List<ComandaAfisare>>(response);
             return list ?? new List<ComandaAfisare>();
         }
+        public async Task<LoginResponse?> LoginAsync(string email, string password)
+        {
+            try
+            {
+                var dto = new
+                {
+                    Email = email,
+                    Password = password
+                };
 
+                var response = await _httpClient.PostAsJsonAsync("api/authapi/login", dto);
+
+                if (!response.IsSuccessStatusCode)
+                    return null;
+
+                var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Eroare LoginAsync: {ex.Message}");
+                return null;
+            }
+        }
+        private void AddAuthHeader()
+        {
+            var token = Preferences.Get("auth_token", "");
+            if (!string.IsNullOrWhiteSpace(token))
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            else
+                _httpClient.DefaultRequestHeaders.Authorization = null;
+        }
 
     }
 }

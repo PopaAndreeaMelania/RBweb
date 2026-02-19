@@ -7,6 +7,6 @@ namespace RBmaui.Data
         Task<List<Meniu>> GetMeniuAsync();
         Task<string?> PlaseazaComandaAsync(string userEmail, List<CosItem> items);
         Task<List<ComandaAfisare>> GetComenzileMeleAsync(string email);
-
+        Task<LoginResponse?> LoginAsync(string email, string password);
     }
 }

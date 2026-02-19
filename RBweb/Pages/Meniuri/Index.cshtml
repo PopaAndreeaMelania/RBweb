@@ -5,10 +5,11 @@
     ViewData["Title"] = "Meniuri";
 }
 
-<h1>Meniuri</h1>
+
+<h1 class="rb-h1">Meniuri</h1>
 
 <p>
-    <a asp-page="Create" class="btn btn-primary">Create New</a>
+    <a asp-page="Create" class="btn rb-btn-primary">Create New</a>
 </p>
 
 <form asp-page="./Index" method="get" class="mb-4">
@@ -16,8 +17,8 @@
         <p>
             Caută după Denumire / Categorie:
             <input type="text" name="searchString" value="@Model.CurrentFilter" />
-            <input type="submit" value="Search" class="btn btn-primary" /> |
-            <a asp-page="./Index">Back to full List</a>
+            <input type="submit" value="Search" class="btn rb-btn-primary" /> |
+            <a asp-page="./Index" class="btn rb-btn-ghost btn-sm">Back</a>
         </p>
     </div>
 </form>
@@ -26,7 +27,7 @@
 {
     <div class="rb-menu-card mb-4">
 
-        <!-- Imagine: daca e gol -> default.jpg -->
+
         <img src="~/images/meniuri/@(string.IsNullOrEmpty(item.Imagine) ? "default.jpg" : item.Imagine)"
              class="rb-menu-img" alt="@item.Denumire" />
 
@@ -64,9 +65,9 @@
                     <a asp-page="./Edit" asp-route-id="@item.ID" class="btn btn-outline-secondary btn-sm">Edit</a>
                     <a asp-page="./Delete" asp-route-id="@item.ID" class="btn btn-outline-danger btn-sm">Delete</a>
                 </div>
-
-                <a asp-page="./Details" asp-route-id="@item.ID" class="rb-plus">+</a>
             </div>
         </div>
     </div>
+
+
 }
