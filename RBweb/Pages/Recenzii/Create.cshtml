@@ -1,0 +1,50 @@
+﻿@page
+@model RBweb.Pages.Recenzii.CreateModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+
+@{
+    ViewData["Title"] = "Recenzie";
+}
+
+<h2 class="mb-3">Lasă o recenzie</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success">@Model.SuccessMessage</div>
+}
+
+<form method="post" class="card shadow-sm">
+    <div class="card-body">
+        <input type="hidden" asp-for="ComandaID" />
+
+        <div class="mb-3">
+            <label class="form-label">Rating (1-5)</label>
+            <input asp-for="Rating" class="form-control" type="number" min="1" max="5" />
+            <span asp-validation-for="Rating" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Comentariu</label>
+            <textarea asp-for="Comentariu" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Comentariu" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button class="btn btn-success" type="submit">Trimite</button>
+            <a class="btn btn-outline-secondary"
+               asp-page="/Comenzi/Details"
+               asp-route-id="@Model.ComandaID">
+                Înapoi la comandă
+            </a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

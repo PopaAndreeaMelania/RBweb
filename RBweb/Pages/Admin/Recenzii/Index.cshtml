@@ -1,0 +1,47 @@
+﻿@page
+@model RBweb.Pages.Admin.Recenzii.IndexModel
+@attribute [Microsoft.AspNetCore.Authorization.Authorize(Roles = "Admin")]
+
+@{
+    ViewData["Title"] = "Recenzii";
+}
+
+<h2 class="mb-3">Recenzii</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
+@if (Model.Recenzii == null || !Model.Recenzii.Any())
+{
+    <div class="alert alert-info">Nu există recenzii încă.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>ComandaID</th>
+                    <th>User</th>
+                    <th class="text-end">Rating</th>
+                    <th>Comentariu</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model.Recenzii.OrderByDescending(x => x.DataCreare))
+                {
+                    <tr>
+                        <td class="fw-semibold">@r.ComandaID</td>
+                        <td>@r.UserName</td>
+                        <td class="text-end">@r.Rating</td>
+                        <td style="max-width: 520px; white-space: normal;">@r.Comentariu</td>
+                        <td>@r.DataCreare.ToString("dd.MM.yyyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

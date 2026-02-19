@@ -63,8 +63,20 @@
         </div>
 
         <div class="d-flex justify-content-between align-items-center mt-3">
-            <h4 class="m-0">Total: @Model.Total.ToString("0.00") lei</h4>
-            <a class="btn btn-outline-secondary" asp-page="/Comenzi/ComenzileMele">Înapoi</a>
-        </div>
+    <h4 class="m-0">Total: @Model.Total.ToString("0.00") lei</h4>
+
+    <div class="d-flex gap-2">
+                @if (Model.Comanda.Status == RBweb.Models.Comanda.StatusComanda.Finalizata)
+        {
+            <a class="btn btn-success"
+               asp-page="/Recenzii/Create"
+               asp-route-comandaId="@Model.Comanda.ID">
+                Lasă recenzie
+            </a>
+        }
+
+        <a class="btn btn-outline-secondary" asp-page="/Comenzi/ComenzileMele">Înapoi</a>
+    </div>
+</div>
     </div>
 </div>

@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:beh="clr-namespace:RBmaui.Behaviours"
              x:Class="RBmaui.Views.LoginPage"
              Title="Login">
 
     <VerticalStackLayout Padding="20" Spacing="12">
-        <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email" />
-        <Entry x:Name="PasswordEntry" Placeholder="Parola" IsPassword="True" />
-
+        <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email">
+            <Entry.Behaviors>
+                <beh:EmailBehaviour />
+            </Entry.Behaviors>
+        </Entry>
+        <Entry x:Name="PasswordEntry" Placeholder="Parola" IsPassword="True">
+            <Entry.Behaviors>
+                <beh:RequiredTextBehaviour />
+            </Entry.Behaviors>
+        </Entry>
         <Button Text="Login" Clicked="Login_Clicked" />
         <Button Text="Creeaza cont" Clicked="GoRegister_Clicked"/>
     </VerticalStackLayout>
