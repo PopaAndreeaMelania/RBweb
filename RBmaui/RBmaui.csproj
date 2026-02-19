@@ -81,6 +81,9 @@
 	  <MauiXaml Update="Views\AccountPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AddRecenziePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ComenziPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

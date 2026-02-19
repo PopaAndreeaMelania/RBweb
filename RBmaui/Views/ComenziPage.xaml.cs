@@ -17,5 +17,12 @@ namespace RBmaui.Views
             base.OnAppearing();
             await vm.Incarca();
         }
+        private async void OnRecenzieClicked(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            int comandaId = (int)button.CommandParameter;
+
+            await Navigation.PushAsync(new AddRecenziePage(comandaId));
+        }
     }
 }

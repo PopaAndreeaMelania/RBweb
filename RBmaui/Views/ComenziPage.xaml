@@ -31,7 +31,9 @@
                             <Label Text="{Binding Status, StringFormat='Status: {0}'}"/>
                             <Label Text="{Binding Total, StringFormat='Total: {0:0.00} lei'}"/>
                             <Label Text="{Binding DataComanda, StringFormat='Data: {0:dd.MM.yyyy HH:mm}'}" FontSize="12"/>
-
+                            <Button Text="Recenzie"
+                                    Clicked="OnRecenzieClicked"
+                                    CommandParameter="{Binding ComandaID}" />
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>

@@ -150,8 +150,29 @@ namespace RBmaui.Data
         {
             _httpClient.DefaultRequestHeaders.Authorization = null;
         }
+        public async Task<bool> AdaugaRecenzieAsync(int comandaId, int rating, string comentariu)
+        {
+            try
+            {
+                AddAuthHeader();
 
+                var dto = new
+                {
+                    ComandaID = comandaId,
+                    Rating = rating,
+                    Comentariu = comentariu
+                };
 
+                var response = await _httpClient.PostAsJsonAsync("api/recenziiapi", dto);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Eroare AdaugaRecenzieAsync: {ex.Message}");
+                return false;
+            }
+        }
 
     }
 }

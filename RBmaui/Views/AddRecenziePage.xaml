@@ -1,0 +1,24 @@
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="RBmaui.Views.AddRecenziePage"
+    Title="Lasă recenzie">
+
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <Label Text="Rating (1-5)" />
+
+        <Stepper x:Name="RatingStepper"
+                 Minimum="1"
+                 Maximum="5"
+                 Value="5"/>
+
+        <Editor x:Name="ComentariuEditor"
+                Placeholder="Scrie comentariul..."
+                HeightRequest="120"/>
+
+        <Button Text="Trimite"
+                Clicked="OnTrimiteClicked"/>
+
+    </VerticalStackLayout>
+</ContentPage>

@@ -17,6 +17,6 @@ namespace RomanianBurgerWeb.Data
 
         public DbSet<Comanda> Comanda { get; set; } = default!;
         public DbSet<ComandaItem> ComandaItem { get; set; } = default!;
-
+        public DbSet<RecenzieDto> Recenzii { get; set; }
     }
 }
