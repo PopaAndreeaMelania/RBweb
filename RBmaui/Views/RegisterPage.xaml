@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RBmaui.Views.RegisterPage"
+             Title="Register">
+
+    <VerticalStackLayout Padding="20" Spacing="12">
+        <Entry x:Name="EmailEntry" Placeholder="Email" Keyboard="Email"/>
+        <Entry x:Name="PasswordEntry" Placeholder="Parola" IsPassword="True"/>
+        <Entry x:Name="ConfirmEntry" Placeholder="Confirma parola" IsPassword="True"/>
+
+        <Button Text="Creeaza cont" Clicked="Register_Clicked"/>
+        <Button Text="Inapoi la Login" Clicked="Back_Clicked"/>
+    </VerticalStackLayout>
+</ContentPage>

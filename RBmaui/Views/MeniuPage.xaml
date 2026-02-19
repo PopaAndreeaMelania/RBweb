@@ -2,6 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RBmaui.Views.MeniuPage"
              Title="ROMANIAN BURGER">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cont" Clicked="Cont_Clicked" />
+    </ContentPage.ToolbarItems>
 
     <Grid Padding="12"
           RowDefinitions="Auto,Auto,*"

@@ -36,6 +36,12 @@ namespace RBmaui.Views
                 App.Cos.Adauga(produs);
                 await DisplayAlert("Cos", $"Ai adaugat {produs.Denumire}", "OK");
             }
+
         }
+        private async void Cont_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new AccountPage());
+        }
+
     }
 }

@@ -9,5 +9,6 @@
         <Entry x:Name="PasswordEntry" Placeholder="Parola" IsPassword="True" />
 
         <Button Text="Login" Clicked="Login_Clicked" />
+        <Button Text="Creeaza cont" Clicked="GoRegister_Clicked"/>
     </VerticalStackLayout>
 </ContentPage>

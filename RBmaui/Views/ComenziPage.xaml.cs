@@ -4,25 +4,18 @@ namespace RBmaui.Views
 {
     public partial class ComenziPage : ContentPage
     {
-        private readonly ComenziViewModel _vm = new();
+        private readonly ComenziViewModel vm = new();
 
         public ComenziPage()
         {
             InitializeComponent();
-            BindingContext = _vm;
+            BindingContext = vm;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-
-            string email = "test@client.com"; // temporar pana la login
-            await _vm.Incarca(email);
+            await vm.Incarca();
         }
-        private async void ComenzileMele_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ComenziPage());
-        }
-
     }
 }

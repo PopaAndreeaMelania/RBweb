@@ -18,9 +18,15 @@
                         <VerticalStackLayout Spacing="4">
 
                             <HorizontalStackLayout Spacing="10">
-                                <Label Text="{Binding NrStrigat}" FontSize="20" FontAttributes="Bold"/>
-                                <Label Text="{Binding NumarComanda}" FontSize="18" FontAttributes="Bold"/>
+                                <Label Text="{Binding NrStrigat, StringFormat='#{0}'}"
+                                                FontSize="20"
+                                                FontAttributes="Bold"/>
+
+                                <Label Text="{Binding NumarComanda}"
+                                                FontSize="18"
+                                                FontAttributes="Bold"/>
                             </HorizontalStackLayout>
+
 
                             <Label Text="{Binding Status, StringFormat='Status: {0}'}"/>
                             <Label Text="{Binding Total, StringFormat='Total: {0:0.00} lei'}"/>

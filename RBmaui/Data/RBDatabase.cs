@@ -30,5 +30,11 @@ namespace RBmaui.Data
         {
             return _restService.LoginAsync(email, password);
         }
+        public Task<(bool ok, string msg)> RegisterAsync(string email, string password)
+        {
+            return _restService.RegisterAsync(email, password);
+        }
+
+
     }
 }

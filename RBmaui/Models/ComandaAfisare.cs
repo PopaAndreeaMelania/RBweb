@@ -7,5 +7,7 @@
         public DateTime DataComanda { get; set; }
         public string Status { get; set; } = "";
         public decimal Total { get; set; }
+
+        public int NrStrigat { get; set; }   // nr  ordine
     }
 }

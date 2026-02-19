@@ -9,6 +9,11 @@ namespace RBmaui.Views
             InitializeComponent();
         }
 
+        private async void GoRegister_Clicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new RegisterPage());
+        }
+
         private async void Login_Clicked(object sender, EventArgs e)
         {
             var email = EmailEntry.Text?.Trim() ?? "";
@@ -31,9 +36,11 @@ namespace RBmaui.Views
             Preferences.Set("auth_token", result.Token);
             Preferences.Set("user_email", result.Email);
 
-            await DisplayAlert("Succes", "Te-ai logat.", "OK");
+            var firstRole = result.Roles != null && result.Roles.Count > 0 ? result.Roles[0] : "";
+            Preferences.Set("user_role", firstRole);
 
-            await Navigation.PopAsync();
+            await DisplayAlert("Succes", "Te-ai logat.", "OK");
+            await Navigation.PushAsync(new AccountPage());
         }
     }
 }

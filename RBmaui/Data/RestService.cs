@@ -4,14 +4,12 @@ using System.Net.Http.Json;
 using Microsoft.Maui.Storage;
 using System.Net.Http.Headers;
 
-
 namespace RBmaui.Data
 {
     public class RestService : IRestService
     {
         private readonly HttpClient _httpClient;
 
-        // Pt emulator: pun 10.0.2.2 in loc de localhost
         private const string BaseUrlWindows = "https://localhost:7083/";
         // private const string BaseUrlAndroid = "https://10.0.2.2:7083/";
 
@@ -28,11 +26,19 @@ namespace RBmaui.Data
             };
         }
 
+        private void AddAuthHeader()
+        {
+            var token = Preferences.Get("auth_token", "");
+            if (!string.IsNullOrWhiteSpace(token))
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            else
+                _httpClient.DefaultRequestHeaders.Authorization = null;
+        }
+
         public async Task<List<Meniu>> GetMeniuAsync()
         {
             try
             {
-                // Testat smerge pe: https://localhost:7083/api/meniuapi
                 var list = await _httpClient.GetFromJsonAsync<List<Meniu>>("api/meniuapi");
                 return list ?? new List<Meniu>();
             }
@@ -45,31 +51,52 @@ namespace RBmaui.Data
 
         public async Task<string?> PlaseazaComandaAsync(string userEmail, List<CosItem> items)
         {
-            var dto = new
+            try
             {
-                UserEmail = userEmail,
-                Items = items.Select(i => new
+                AddAuthHeader();
+
+                var dto = new
                 {
-                    MeniuId = i.Produs.Id,
-                    Cantitate = i.Cantitate
-                }).ToList()
-            };
+                    UserEmail = userEmail,
+                    Items = items.Select(i => new
+                    {
+                        MeniuId = i.Produs.Id,
+                        Cantitate = i.Cantitate
+                    }).ToList()
+                };
 
-            var response = await _httpClient.PostAsJsonAsync("api/comenziapi", dto);
+                var response = await _httpClient.PostAsJsonAsync("api/comenziapi", dto);
 
-            if (!response.IsSuccessStatusCode)
+                if (!response.IsSuccessStatusCode)
+                    return null;
+
+                var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+                return result != null && result.ContainsKey("numarComanda") ? result["numarComanda"] : null;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Eroare PlaseazaComandaAsync: {ex.Message}");
                 return null;
-
-            var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
-            return result?["numarComanda"];
+            }
         }
 
         public async Task<List<ComandaAfisare>> GetComenzileMeleAsync(string email)
         {
-            var response = await _httpClient.GetStringAsync($"api/comenziapi/{email}");
-            var list = JsonConvert.DeserializeObject<List<ComandaAfisare>>(response);
-            return list ?? new List<ComandaAfisare>();
+            try
+            {
+                AddAuthHeader();
+
+                var response = await _httpClient.GetStringAsync($"api/comenziapi/{email}");
+                var list = JsonConvert.DeserializeObject<List<ComandaAfisare>>(response);
+                return list ?? new List<ComandaAfisare>();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Eroare GetComenzileMeleAsync: {ex.Message}");
+                return new List<ComandaAfisare>();
+            }
         }
+
         public async Task<LoginResponse?> LoginAsync(string email, string password)
         {
             try
@@ -94,14 +121,26 @@ namespace RBmaui.Data
                 return null;
             }
         }
-        private void AddAuthHeader()
+        public async Task<(bool ok, string msg)> RegisterAsync(string email, string password)
         {
-            var token = Preferences.Get("auth_token", "");
-            if (!string.IsNullOrWhiteSpace(token))
-                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            else
-                _httpClient.DefaultRequestHeaders.Authorization = null;
+            try
+            {
+                var dto = new { Email = email, Password = password };
+
+                var response = await _httpClient.PostAsJsonAsync("api/authapi/register", dto);
+
+                if (response.IsSuccessStatusCode)
+                    return (true, "OK");
+
+                var body = await response.Content.ReadAsStringAsync();
+                return (false, body);
+            }
+            catch (Exception ex)
+            {
+                return (false, ex.Message);
+            }
         }
+
 
     }
 }
