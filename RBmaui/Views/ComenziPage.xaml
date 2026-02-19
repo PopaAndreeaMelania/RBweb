@@ -1,0 +1,25 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RBmaui.Views.ComenziPage"
+             Title="Comenzile mele">
+
+    <VerticalStackLayout Padding="12" Spacing="10">
+        <Label Text="Comenzile mele" FontSize="22" FontAttributes="Bold"/>
+
+        <CollectionView ItemsSource="{Binding Comenzi}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="0,6">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="{Binding NumarComanda}" FontSize="18" FontAttributes="Bold"/>
+                            <Label Text="{Binding Status, StringFormat='Status: {0}'}"/>
+                            <Label Text="{Binding Total, StringFormat='Total: {0} lei'}"/>
+                            <Label Text="{Binding DataComanda, StringFormat='Data: {0:dd.MM.yyyy HH:mm}'}" FontSize="12"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </VerticalStackLayout>
+</ContentPage>

@@ -15,5 +15,16 @@ namespace RBmaui.Data
         {
             return _restService.GetMeniuAsync();
         }
+
+        public Task<string?> PlaseazaComandaAsync(string email, List<CosItem> items)
+        {
+            return _restService.PlaseazaComandaAsync(email, items);
+        }
+        public Task<List<ComandaAfisare>> GetComenzileMeleAsync(string email)
+        {
+            return _restService.GetComenzileMeleAsync(email);
+        }
+
+
     }
 }

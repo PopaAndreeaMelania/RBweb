@@ -1,0 +1,39 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RBmaui.Views.CosPage"
+             Title="Cos">
+
+    <VerticalStackLayout Padding="12" Spacing="10">
+
+        <Label Text="Cosul meu" FontSize="22" FontAttributes="Bold"/>
+
+        <CollectionView ItemsSource="{Binding Items}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="10" Margin="0,6">
+                        <VerticalStackLayout Spacing="6">
+
+                            <Label Text="{Binding Produs.Denumire}" FontSize="18" FontAttributes="Bold"/>
+                            <Label Text="{Binding Produs.Pret, StringFormat='Pret: {0} lei'}"/>
+
+                            <HorizontalStackLayout Spacing="10">
+                                <Button Text="-" Clicked="Minus_Clicked"/>
+                                <Label Text="{Binding Cantitate}" VerticalOptions="Center"/>
+                                <Button Text="+" Clicked="Plus_Clicked"/>
+                                <Button Text="Sterge" Clicked="Sterge_Clicked"/>
+
+                            </HorizontalStackLayout>
+
+                            <Label Text="{Binding Subtotal, StringFormat='Subtotal: {0} lei'}" />
+
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label x:Name="TotalLabel" Text="Total: 0 lei" FontSize="18" FontAttributes="Bold"/>
+        <Button Text="Plaseaza comanda" BackgroundColor="black" TextColor="White" Clicked="PlaseazaComanda_Clicked"/>
+        
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,5 +1,6 @@
-﻿using System.Net.Http.Json;
+﻿using Newtonsoft.Json;
 using RBmaui.Models;
+using System.Net.Http.Json;
 
 namespace RBmaui.Data
 {
@@ -28,7 +29,7 @@ namespace RBmaui.Data
         {
             try
             {
-                // Testat merge pe: https://localhost:7083/api/meniuapi
+                // Testat smerge pe: https://localhost:7083/api/meniuapi
                 var list = await _httpClient.GetFromJsonAsync<List<Meniu>>("api/meniuapi");
                 return list ?? new List<Meniu>();
             }
@@ -38,5 +39,35 @@ namespace RBmaui.Data
                 return new List<Meniu>();
             }
         }
+
+        public async Task<string?> PlaseazaComandaAsync(string userEmail, List<CosItem> items)
+        {
+            var dto = new
+            {
+                UserEmail = userEmail,
+                Items = items.Select(i => new
+                {
+                    MeniuId = i.Produs.Id,
+                    Cantitate = i.Cantitate
+                }).ToList()
+            };
+
+            var response = await _httpClient.PostAsJsonAsync("api/comenziapi", dto);
+
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var result = await response.Content.ReadFromJsonAsync<Dictionary<string, string>>();
+            return result?["numarComanda"];
+        }
+
+        public async Task<List<ComandaAfisare>> GetComenzileMeleAsync(string email)
+        {
+            var response = await _httpClient.GetStringAsync($"api/comenziapi/{email}");
+            var list = JsonConvert.DeserializeObject<List<ComandaAfisare>>(response);
+            return list ?? new List<ComandaAfisare>();
+        }
+
+
     }
 }

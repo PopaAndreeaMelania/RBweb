@@ -5,5 +5,8 @@ namespace RBmaui.Data
     public interface IRestService
     {
         Task<List<Meniu>> GetMeniuAsync();
+        Task<string?> PlaseazaComandaAsync(string userEmail, List<CosItem> items);
+        Task<List<ComandaAfisare>> GetComenzileMeleAsync(string email);
+
     }
 }

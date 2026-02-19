@@ -3,25 +3,51 @@
              x:Class="RBmaui.Views.MeniuPage"
              Title="Meniu">
 
-    <VerticalStackLayout Padding="12" Spacing="10">
+    <Grid Padding="12"
+          RowDefinitions="Auto,Auto,*"
+          RowSpacing="10">
 
-        <Label Text="Meniul Romanian Burger"
+        <Label Grid.Row="0"
+               Text="Meniu Romanian Burger"
                FontSize="22"
                FontAttributes="Bold" />
 
-        <CollectionView ItemsSource="{Binding Produse}">
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Grid.Column="0"
+                    Text="Vezi cos"
+                    Clicked="VeziCos_Clicked" />
+
+            <Button Grid.Column="1"
+                    Text="Comenzile mele"
+                    Clicked="ComenzileMele_Clicked" />
+        </Grid>
+
+        <!-- Lista produse -->
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Produse}"
+                        VerticalScrollBarVisibility="Always">
+
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Padding="10" Margin="0,6">
                         <VerticalStackLayout Spacing="4">
-                            <Label Text="{Binding Denumire}" FontSize="18" FontAttributes="Bold"/>
+                            <Label Text="{Binding Denumire}"
+                                   FontSize="18"
+                                   FontAttributes="Bold"/>
+
                             <Label Text="{Binding Pret, StringFormat='Pret: {0} lei'}"/>
-                            <Label Text="{Binding Ingrediente}" FontSize="12" LineBreakMode="TailTruncation"/>
+
+                            <Label Text="{Binding Ingrediente}"
+                                   FontSize="12"
+                                   LineBreakMode="TailTruncation"/>
+
+                            <Button Text="Adauga in cos"
+                                    Clicked="AdaugaInCos_Clicked"/>
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

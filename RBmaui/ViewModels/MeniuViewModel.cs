@@ -7,13 +7,29 @@ namespace RBmaui.ViewModels
     {
         public ObservableCollection<Meniu> Produse { get; set; } = new ObservableCollection<Meniu>();
 
-        public async Task IncarcaMeniu()
+        /*public async Task IncarcaMeniu()
         {
             Produse.Clear();
             var list = await App.Database.GetMeniuAsync();
 
             foreach (var p in list)
                 Produse.Add(p);
+        }*/
+        public async Task IncarcaMeniu()
+        {
+            Produse.Clear();
+
+            var list = await App.Database.GetMeniuAsync();
+
+            await Application.Current.MainPage.DisplayAlert(
+                "Debug",
+                $"Am primit {list.Count} produse",
+                "OK");
+
+            foreach (var p in list)
+                Produse.Add(p);
         }
+
+
     }
 }
