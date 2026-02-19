@@ -101,26 +101,32 @@ namespace RBmaui.Data
         {
             try
             {
-                var dto = new
-                {
-                    Email = email,
-                    Password = password
-                };
+                ClearAuthHeader();
+
+                var dto = new { Email = email, Password = password };
 
                 var response = await _httpClient.PostAsJsonAsync("api/authapi/login", dto);
+                var body = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
+                {
+                    System.Diagnostics.Debug.WriteLine($"LOGIN FAIL HTTP {(int)response.StatusCode}: {body}");
+                    Preferences.Set("last_login_error", $"HTTP {(int)response.StatusCode}: {body}");
                     return null;
+                }
 
+                Preferences.Remove("last_login_error");
                 var result = await response.Content.ReadFromJsonAsync<LoginResponse>();
                 return result;
             }
             catch (Exception ex)
             {
+                Preferences.Set("last_login_error", ex.Message);
                 System.Diagnostics.Debug.WriteLine($"Eroare LoginAsync: {ex.Message}");
                 return null;
             }
         }
+
         public async Task<(bool ok, string msg)> RegisterAsync(string email, string password)
         {
             try
@@ -128,18 +134,23 @@ namespace RBmaui.Data
                 var dto = new { Email = email, Password = password };
 
                 var response = await _httpClient.PostAsJsonAsync("api/authapi/register", dto);
+                var body = await response.Content.ReadAsStringAsync();
 
                 if (response.IsSuccessStatusCode)
                     return (true, "OK");
 
-                var body = await response.Content.ReadAsStringAsync();
-                return (false, body);
+                return (false, $"HTTP {(int)response.StatusCode}: {body}");
             }
             catch (Exception ex)
             {
                 return (false, ex.Message);
             }
         }
+        public void ClearAuthHeader()
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+        }
+
 
 
     }

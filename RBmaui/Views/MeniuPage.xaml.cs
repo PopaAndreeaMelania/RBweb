@@ -1,5 +1,6 @@
 using RBmaui.Models;
 using RBmaui.ViewModels;
+using RBmaui.Helpers;
 
 namespace RBmaui.Views
 {
@@ -26,6 +27,12 @@ namespace RBmaui.Views
 
         private async void ComenzileMele_Clicked(object sender, EventArgs e)
         {
+            if (!AuthSession.IsLoggedIn)
+            {
+                await Navigation.PushAsync(new LoginPage());
+                return;
+            }
+
             await Navigation.PushAsync(new ComenziPage());
         }
 

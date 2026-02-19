@@ -1,4 +1,4 @@
-using Microsoft.Maui.Storage;
+using RBmaui.Helpers;
 
 namespace RBmaui.Views
 {
@@ -13,53 +13,48 @@ namespace RBmaui.Views
         {
             base.OnAppearing();
 
-            var token = Preferences.Get("auth_token", "");
-
-            if (string.IsNullOrWhiteSpace(token))
+            if (!AuthSession.IsLoggedIn)
             {
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                EmailLabel.Text = "Neautentificat";
+                RoleLabel.Text = "";
+
+                LoginBtn.IsVisible = true;
+                RegisterBtn.IsVisible = true;
+
+                MyOrdersBtn.IsVisible = false;
+                LogoutBtn.IsVisible = false;
                 return;
             }
 
-            var email = Preferences.Get("user_email", "");
-            var role = Preferences.Get("user_role", "");
+            EmailLabel.Text = $"Logat ca: {AuthSession.Email}";
+            RoleLabel.Text = string.IsNullOrWhiteSpace(AuthSession.Role) ? "" : $"Rol: {AuthSession.Role}";
 
-            EmailLabel.Text = $"Logat ca: {email}";
-            RoleLabel.Text = string.IsNullOrWhiteSpace(role) ? "" : $"Rol: {role}";
+            LoginBtn.IsVisible = false;
+            RegisterBtn.IsVisible = false;
+
+            MyOrdersBtn.IsVisible = true;
+            LogoutBtn.IsVisible = true;
         }
 
+        private async void Login_Clicked(object sender, EventArgs e)
+            => await Navigation.PushAsync(new LoginPage());
+
+        private async void Register_Clicked(object sender, EventArgs e)
+            => await Navigation.PushAsync(new RegisterPage());
 
         private async void Comenzi_Clicked(object sender, EventArgs e)
-        {
-            var email = Preferences.Get("user_email", "");
-            if (string.IsNullOrWhiteSpace(email))
-            {
-                await DisplayAlert("Info", "Trebuie sa te loghezi.", "OK");
-                return;
-            }
-
-            await Navigation.PushAsync(new ComenziPage());
-        }
+            => await Navigation.PushAsync(new ComenziPage());
 
         private async void Logout_Clicked(object sender, EventArgs e)
         {
+            App.Database.ClearAuthHeader();
+
             Preferences.Remove("auth_token");
             Preferences.Remove("user_email");
             Preferences.Remove("user_role");
 
             await DisplayAlert("OK", "Te-ai delogat.", "OK");
-            
-            Application.Current.MainPage = new NavigationPage(new LoginPage());
+            Application.Current.MainPage = new NavigationPage(new MeniuPage());
         }
-        private void Refresh_Clicked(object sender, EventArgs e)
-        {
-            OnAppearing();
-        }
-        private async void Meniu_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new MeniuPage());
-        }
-
-
     }
 }

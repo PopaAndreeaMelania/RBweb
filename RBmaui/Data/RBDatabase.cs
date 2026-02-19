@@ -34,6 +34,11 @@ namespace RBmaui.Data
         {
             return _restService.RegisterAsync(email, password);
         }
+        public void ClearAuthHeader()
+        {
+            _restService.ClearAuthHeader();
+        }
+
 
 
     }

@@ -1,4 +1,5 @@
 using Microsoft.Maui.Storage;
+using RBmaui.Helpers;
 
 namespace RBmaui.Views
 {
@@ -29,9 +30,11 @@ namespace RBmaui.Views
 
             if (result == null || string.IsNullOrWhiteSpace(result.Token))
             {
-                await DisplayAlert("Eroare", "Login esuat.", "OK");
+                var err = Preferences.Get("last_login_error", "Fara detalii");
+                await DisplayAlert("Eroare", $"Login esuat.\n{err}", "OK");
                 return;
             }
+
 
             Preferences.Set("auth_token", result.Token);
             Preferences.Set("user_email", result.Email);
@@ -40,7 +43,7 @@ namespace RBmaui.Views
             Preferences.Set("user_role", firstRole);
 
             await DisplayAlert("Succes", "Te-ai logat.", "OK");
-            await Navigation.PushAsync(new AccountPage());
+            await Navigation.PopAsync();
         }
     }
 }
